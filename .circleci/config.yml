@@ -60,7 +60,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook -i inventory main4.yml
+            ansible-playbook -i inventory main4.yml --ssh-common-args='-o StrictHostKeyChecking=no'
 workflows:
   # Name the workflow "welcome"
   my_workflow:
