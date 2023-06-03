@@ -67,5 +67,4 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - print_greetings
-      - create_infrastructure
       - configure_infrastructure

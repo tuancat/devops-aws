@@ -1,3 +1,4 @@
+[all:vars]
+ansible_ssh_private_key_file=./ec2-deployment.pem
 [all]
-44.201.197.28
-54.173.129.100
+ec2-54-152-21-38.compute-1.amazonaws.com
