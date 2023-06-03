@@ -1,18 +1,59 @@
-Parameters:
-  # New Bucket name
-  MyBucketName:
-    Description: Existing Bucket name
-    Type: String
+Description: >
+    tuancnh
+    For creating the frontend of the final project
 
+Parameters:
+    # New Bucket name
+    MyBucketName:
+        Description: "The Bucket name"
+        Type: String
 Resources:
-  WebsiteBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub "${MyBucketName}"
-      AccessControl: PublicRead
-      OwnershipControls:
-        Rules:
-          - ObjectOwnership: BucketOwnerPreferred
-      WebsiteConfiguration:
-        IndexDocument: index.html
-        ErrorDocument: error.html
+    WebsiteBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: !Ref MyBucketName
+            AccessControl: "PublicRead"
+            WebsiteConfiguration:
+                IndexDocument: "index.html"
+                ErrorDocument: "error.html"
+
+    WebsiteBucketPolicy:
+        Type: AWS::S3::BucketPolicy
+        Properties:
+            Bucket:
+                Ref: "WebsiteBucket"
+            PolicyDocument:
+                Statement:
+                    -   Sid: "PublicReadForGetBucketObjects"
+                        Effect: "Allow"
+                        Principal: '*'
+                        Action: "s3:GetObject*"
+                        Resource:
+                            -   Fn::Join:
+                                    - ""
+                                    -   - "arn:aws:s3:::"
+                                        -   Ref: "WebsiteBucket"
+                            -   Fn::Join:
+                                    - ""
+                                    -   - "arn:aws:s3:::"
+                                        -   Ref: "WebsiteBucket"
+                                        - "/*"
+
+Outputs:
+    WebsiteURL:
+        Description: "S3 static host endpoint"
+        Value:
+            Fn::GetAtt:
+                - "WebsiteBucket"
+                - "WebsiteURL"
+        Export:
+            Name:
+                Fn::Join:
+                    - ""
+                    -   -   Ref: "AWS::StackName"
+                        - "-WebsiteURL"
+
+    WebsiteBucketName:
+        Description: "S3 bucket name"
+        Value:
+            Ref: "WebsiteBucket"
