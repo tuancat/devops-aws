@@ -30,7 +30,7 @@
     production: yes
     state: present
 
-- name: Creates directory
+- name: Creates directory for web
   file:
     path: ~/web
     state: directory
