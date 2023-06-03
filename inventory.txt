@@ -1,4 +1,2 @@
-[web:vars]
-ansible_ssh_private_key_file=./ec2-deployment.pem
-[web]
-ec2-44-202-10-191.compute-1.amazonaws.com
+[all]
+44.204.27.134
