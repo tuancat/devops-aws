@@ -11,4 +11,3 @@
   become_user: root
   roles:
    - setup
-  host_key_checking: false
